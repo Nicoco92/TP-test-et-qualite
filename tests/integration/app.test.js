@@ -37,3 +37,18 @@ describe("Student-Course API integration", () => {
     expect(res.statusCode).toBe(400);
   });
 });
+
+test("GET /courses should return seeded courses", async () => {
+  const res = await request(app).get("/courses");
+  expect(res.statusCode).toBe(200);
+  expect(res.body.courses.length).toBe(3);
+  expect(res.body.courses[0].title).toBe("Math");
+});
+
+test("POST /courses should not allow duplicate title", async () => {
+  const res = await request(app)
+    .post("/courses")
+    .send({ title: "Math", teacher: "Mr. Duplicate" });
+  expect(res.statusCode).toBe(201);
+  expect(res.body.error).toBe("Course title must be unique");
+});

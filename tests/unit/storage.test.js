@@ -53,3 +53,21 @@ test("should allow more than 3 students in a course", () => {
   const result = storage.enroll(4, course.id);
   expect(result.error).toBe("Course is full");
 });
+
+test("should not delete a student if enrolled in a course", () => {
+  const students = storage.list("students");
+  const courses = storage.list("courses");
+  storage.enroll(students[0].id, courses[0].id);
+
+  const result = storage.remove("students", students[0].id);
+  expect(result.error).toBe("Cannot delete student: enrolled in a course");
+});
+
+test("should unenroll a student from a course", () => {
+  const students = storage.list("students");
+  const course = storage.list("courses")[0];
+  storage.enroll(students[0].id, course.id);
+
+  const result = storage.unenroll(students[0].id, course.id);
+  expect(result.success).toBe(true);
+});
