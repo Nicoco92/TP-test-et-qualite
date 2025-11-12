@@ -2,9 +2,38 @@ const storage = require('../services/storage');
 
 /**
  * @swagger
+ * tags:
+ *   name: Courses
+ *   description: Gestion des cours
+ */
+
+/**
+ * @swagger
  * /courses:
  *   get:
  *     summary: Liste des cours
+ *     tags: [Courses]
+ *     parameters:
+ *       - in: query
+ *         name: title
+ *         schema:
+ *           type: string
+ *         description: Filtrer les cours par titre
+ *       - in: query
+ *         name: teacher
+ *         schema:
+ *           type: string
+ *         description: Filtrer les cours par enseignant
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *           default: 1
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           default: 10
  *     responses:
  *       200:
  *         description: OK
@@ -24,6 +53,7 @@ exports.listCourses = (req, res) => {
  * /courses/{id}:
  *   get:
  *     summary: Récupérer un cours
+ *     tags: [Courses]
  *     parameters:
  *       - name: id
  *         in: path
@@ -48,6 +78,7 @@ exports.getCourse = (req, res) => {
  * /courses:
  *   post:
  *     summary: Créer un cours
+ *     tags: [Courses]
  *     requestBody:
  *       required: true
  *       content:
@@ -81,6 +112,7 @@ exports.createCourse = (req, res) => {
  * /courses/{id}:
  *   delete:
  *     summary: Supprimer un cours
+ *     tags: [Courses]
  *     parameters:
  *       - name: id
  *         in: path
@@ -101,6 +133,36 @@ exports.deleteCourse = (req, res) => {
   return res.status(204).send();
 };
 
+/**
+ * @swagger
+ * /courses/{id}:
+ *   put:
+ *     tags: [Courses]
+ *     summary: Mettre à jour un cours
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *               teacher:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Cours mis à jour
+ *       400:
+ *         description: Doublon titre ou autres erreurs
+ *       404:
+ *         description: Cours non trouvé
+ */
 exports.updateCourse = (req, res) => {
   const course = storage.get('courses', req.params.id);
   if (!course) return res.status(404).json({ error: 'Course not found' });

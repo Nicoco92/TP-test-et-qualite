@@ -1,25 +1,29 @@
 const express = require('express');
 const swaggerUi = require('swagger-ui-express');
-
-const x = require('./routes/students');
-const y = require('./routes/courses');
-
-const z = require('../swagger.json');
-const app = express();
-app.use(express.json());
-
 const swaggerJSDoc = require('swagger-jsdoc');
-const swaggerDefinition = require('../swaggerDef');
 
+const studentsRoutes = require('./routes/students');
+const coursesRoutes = require('./routes/courses');
+
+const swaggerDefinition = require('../swaggerDef'); // garde swaggerDef.js à la racine
 const options = {
-  swaggerDefinition,
+  definition: swaggerDefinition,
   apis: ['./src/controllers/*.js'], // Chemin vers les fichiers avec les commentaires JSDoc
 };
 
 const swaggerSpec = swaggerJSDoc(options);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(z));
 
-//app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+const app = express();
+app.use(express.json());
+
+// Serve swagger UI with the generated spec
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+// Optional: expose the raw swagger JSON for download/CI
+app.get('/swagger.json', (req, res) => res.json(swaggerSpec));
+
+const x = require('./routes/students');
+const y = require('./routes/courses');
 
 const storage = require('./services/storage');
 
