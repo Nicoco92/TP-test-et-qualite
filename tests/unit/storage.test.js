@@ -71,3 +71,17 @@ test('should unenroll a student from a course', () => {
   const result = storage.unenroll(students[0].id, course.id);
   expect(result.success).toBe(true);
 });
+
+test('should return the correct courses for a student', () => {
+  const students = storage.list('students');
+  const courses = storage.list('courses');
+  storage.enroll(students[0].id, courses[0].id);
+  storage.enroll(students[0].id, courses[1].id);
+
+  const studentCourses = storage.getStudentCourses(students[0].id);
+  expect(studentCourses.length).toBe(2);
+  expect(studentCourses.map((c) => c.id)).toEqual([
+    courses[0].id,
+    courses[1].id,
+  ]);
+});

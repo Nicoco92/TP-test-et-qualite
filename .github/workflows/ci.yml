@@ -35,3 +35,8 @@ jobs:
         with:
           name: coverage-report
           path: coverage/
+
+      - name: Upload coverage to Codacy
+        run: npx codacy-coverage < coverage/lcov.info
+        env:
+          CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
