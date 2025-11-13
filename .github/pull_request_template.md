@@ -16,7 +16,7 @@ Coche la ou les cases correspondantes :
 - [ ] Refactorisation / amélioration du code
 - [ ] Tests ajoutés ou modifiés
 - [ ] Mise à jour de la documentation
-- [ ] Autre (préciser) : **\*\*\*\***\_\_\_**\*\*\*\***
+- [ ] Autre (préciser) :
 
 ---
 
@@ -32,7 +32,7 @@ Décris comment tester les modifications :
 
 ## Captures d’écran (si applicable)
 
-_(Ajoute des images ou GIFs montrant les changements visuels, si pertinents)_
+_(Ajout des images ou GIFs montrant les changements visuels, si pertinents)_
 
 ---
 
@@ -45,8 +45,3 @@ _(Ajoute des images ou GIFs montrant les changements visuels, si pertinents)_
 - [ ] Les commits sont clairs et significatifs
 
 ---
-
-## Liens utiles
-
-- Issue liée : #\_\_\_\_
-- Documentation associée : [lien]
